@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How it works — Affiliate Dashboard</title>
+  <meta name="description" content="How Affiliate Dashboard connects to TikTok Shop: creator-type OAuth authorization, the three read scopes it requests and why, and how data flows from the TikTok Shop API to a local SQLite database.">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="bar">
+      <a class="brand" href="index.html">
+        <span class="mark" aria-hidden="true">AD</span>
+        <span>Affiliate Dashboard</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">☰</button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html" aria-current="page">How it works</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-head">
+      <div class="wrap">
+        <span class="eyebrow">How it works</span>
+        <h1>The TikTok Shop integration, plainly</h1>
+        <p class="lede" style="max-width:62ch">
+          Affiliate Dashboard reads a creator's own affiliate data through the official
+          TikTok Shop API and stores it on that creator's own machine. Here is every step,
+          in order.
+        </p>
+      </div>
+    </div>
+
+    <!-- FLOW -->
+    <section class="section" style="padding-top:24px">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>From authorization to dashboard</h2>
+          <p>Four steps, all of them read-only.</p>
+        </div>
+        <div class="steps-flow">
+
+          <div class="flow-item">
+            <div class="flow-rail"><div class="dot">1</div><div class="line"></div></div>
+            <div class="flow-body">
+              <h3>The creator authorizes their own account</h3>
+              <p>
+                The creator connects their own TikTok Shop affiliate account using creator-type
+                OAuth authorization. They sign in on TikTok's own page and approve the requested
+                permissions there — the app never sees or handles their TikTok password.
+              </p>
+              <p>
+                Authorization can be revoked by the creator at any time from their TikTok account
+                settings.
+              </p>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-rail"><div class="dot">2</div><div class="line"></div></div>
+            <div class="flow-body">
+              <h3>Three read scopes are requested</h3>
+              <p>
+                Each scope maps directly to one part of the dashboard. Nothing is requested
+                &ldquo;just in case&rdquo;.
+              </p>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-rail"><div class="dot">3</div><div class="line"></div></div>
+            <div class="flow-body">
+              <h3>Data is read and stored locally</h3>
+              <p>
+                Using the granted access token, the app calls the TikTok Shop API for the
+                creator's sample applications, fulfillment status, target collaborations,
+                attributed orders, creator profile and showcase products. The responses are
+                written to a SQLite database file on the creator's own machine.
+              </p>
+              <p>
+                There is no server, no hosted account, and no upload step. The dashboard reads
+                from that local database.
+              </p>
+            </div>
+          </div>
+
+          <div class="flow-item">
+            <div class="flow-rail"><div class="dot">4</div><div class="line"></div></div>
+            <div class="flow-body">
+              <h3>The four views are assembled</h3>
+              <p>
+                Samples, collab invites, showcase and earnings are each rendered from the
+                locally stored data — a single place to see what shipped, what arrived, what
+                needs a reply, and what earned commission.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SCOPES -->
+    <section class="section tint">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Permissions</span>
+          <h2>Scopes requested, and why</h2>
+          <p>All three are read scopes.</p>
+        </div>
+
+        <div class="table-scroll">
+          <table class="scopes">
+            <caption>Every scope the app requests, and the part of the dashboard it powers.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Scope</th>
+                <th scope="col">Access</th>
+                <th scope="col">Why it is needed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><code>creator.affiliate_collaboration.read</code></th>
+                <td>Read</td>
+                <td>
+                  Sample applications and their fulfillment status, target collaborations, and
+                  orders attributed to the creator's content. This scope powers the Samples,
+                  Collab invites and Earnings views.
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>creator.affiliate.info</code></th>
+                <td>Read</td>
+                <td>
+                  The creator's own profile, used to confirm which account the stored data
+                  belongs to and to label the dashboard.
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><code>creator.showcase.read</code></th>
+                <td>Read</td>
+                <td>
+                  The products currently on the creator's showcase, shown in the Showcase view
+                  alongside the samples and collaborations they came from.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="prose">
+          <div class="callout">
+            <h3>No write scopes are requested</h3>
+            <p>
+              The app requests no scope that would let it create, update, delete, publish or
+              send anything. It cannot accept a collaboration, reply to a message, apply for a
+              sample, or change a showcase — those remain the creator's actions, taken in the
+              TikTok Shop app.
+            </p>
+            <p>
+              This is enforced in the code as well as in the scope request: every outbound call
+              is checked against an explicit allowlist of read endpoints, and any request that
+              is not on that list is refused before it is sent.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA FLOW -->
+    <section class="section">
+      <div class="wrap">
+        <div class="split">
+          <div>
+            <div class="kicker">Data flow</div>
+            <h2>Nothing leaves the device</h2>
+            <p>
+              The path the data takes is short and has no third party in it:
+            </p>
+            <p>
+              <code>TikTok Shop API</code> → <code>local machine</code> → <code>local SQLite</code>
+            </p>
+            <p>
+              The app talks to TikTok's API to fetch the creator's own data and writes it to a
+              database file on that same machine. It sends that data nowhere else. There is no
+              analytics service, no hosted backend, no telemetry, and no third party with a copy.
+            </p>
+            <p>
+              Access tokens are stored in the same local database and are transmitted only back
+              to TikTok's API, to authenticate the creator's own requests.
+            </p>
+            <p>
+              Deleting the local database file removes the stored data, because no other copy
+              exists. See the <a href="privacy.html">Privacy Policy</a> for the full detail.
+            </p>
+          </div>
+          <div class="split-media">
+            <figure class="app-frame">
+              <div class="chrome" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span class="addr">localhost</span>
+              </div>
+              <div class="app-body">
+                <div class="app-tabs" aria-hidden="true">
+                  <span class="app-tab">Samples</span>
+                  <span class="app-tab on">Collabs</span>
+                  <span class="app-tab">Showcase</span>
+                  <span class="app-tab">Earnings</span>
+                </div>
+                <div class="mock-rows" aria-hidden="true">
+                  <div class="mock-row">
+                    <div class="bar-lines"><span class="bar w-70"></span><span class="bar short w-45"></span></div>
+                    <span class="pill due">Reply due</span>
+                  </div>
+                  <div class="mock-row">
+                    <div class="bar-lines"><span class="bar w-55"></span><span class="bar short w-60"></span></div>
+                    <span class="pill flat">Invited</span>
+                  </div>
+                  <div class="mock-row">
+                    <div class="bar-lines"><span class="bar w-85"></span><span class="bar short w-35"></span></div>
+                    <span class="pill ok">Accepted</span>
+                  </div>
+                </div>
+              </div>
+              <figcaption class="meta" style="padding:12px 16px 14px">
+                An illustration of the collab invites view, drawn in CSS. Not a screenshot.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDEPENDENCE -->
+    <section class="section tint">
+      <div class="prose">
+        <h2 class="center">An independent project</h2>
+        <p>
+          Affiliate Dashboard is built and maintained independently. It is not affiliated with,
+          endorsed by, or sponsored by TikTok, and it is not an official TikTok product. It uses
+          the publicly documented TikTok Shop API under the terms that apply to it.
+        </p>
+        <p>
+          The project is currently in development and is being validated against the developer's
+          own creator account first.
+        </p>
+        <p class="center" style="margin-top:24px">
+          <a class="btn btn-ghost" href="contact.html">Questions? Get in touch →</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a class="brand" href="index.html"><span class="mark" aria-hidden="true">AD</span><span>Affiliate Dashboard</span></a>
+          <p>A read-only, locally run dashboard that brings a TikTok Shop affiliate creator's samples, collaborations, showcase and attributed orders into one view.</p>
+        </div>
+        <nav class="foot-col" aria-label="Product">
+          <h3>Product</h3>
+          <a href="index.html">Home</a>
+          <a href="how-it-works.html">How it works</a>
+        </nav>
+        <nav class="foot-col" aria-label="Information">
+          <h3>Info</h3>
+          <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </nav>
+      </div>
+      <div class="foot-bottom">
+        <span>&copy; 2026 Affiliate Dashboard</span>
+        <span><a href="mailto:islaxtech@gmail.com">islaxtech@gmail.com</a></span>
+      </div>
+      <p class="disclaimer">
+        Independent project. Not affiliated with, endorsed by, or sponsored by TikTok.
+        TikTok and TikTok Shop are trademarks of their respective owners.
+      </p>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
