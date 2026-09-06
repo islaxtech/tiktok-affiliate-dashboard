@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Affiliate Dashboard — samples, collabs and commissions in one local view</title>
+  <meta name="description" content="Affiliate Dashboard is a read-only dashboard for TikTok Shop affiliate creators. It pulls sample applications, fulfillment status, collaboration invitations and attributed orders into a single local view.">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="bar">
+      <a class="brand" href="index.html">
+        <span class="mark" aria-hidden="true">AD</span>
+        <span>Affiliate Dashboard</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">☰</button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow">Currently in development</span>
+            <h1>See every sample, collab, and commission in one place.</h1>
+            <p class="lede">
+              A read-only dashboard for TikTok Shop affiliate creators that pulls sample
+              applications, fulfillment status, collaboration invitations, and attributed
+              orders into a single local view.
+            </p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="how-it-works.html">See how it works →</a>
+              <a class="btn btn-ghost" href="privacy.html">Read the privacy policy</a>
+            </div>
+            <p class="hero-links">
+              Built for affiliate creators. Validated against the developer's own creator
+              account first.
+            </p>
+            <div class="tags">
+              <span class="tag">Read-only</span>
+              <span class="tag">Runs locally</span>
+              <span class="tag">Local SQLite</span>
+              <span class="tag">Creator-type OAuth</span>
+              <span class="tag">No write scopes</span>
+            </div>
+          </div>
+
+          <div class="split-media">
+            <figure class="app-frame">
+              <div class="chrome" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span class="addr">localhost</span>
+              </div>
+              <div class="app-body">
+                <div class="app-tabs" aria-hidden="true">
+                  <span class="app-tab on">Samples</span>
+                  <span class="app-tab">Collabs</span>
+                  <span class="app-tab">Showcase</span>
+                  <span class="app-tab">Earnings</span>
+                </div>
+                <div class="mock-rows" aria-hidden="true">
+                  <div class="mock-row">
+                    <div class="bar-lines"><span class="bar w-70"></span><span class="bar short w-45"></span></div>
+                    <span class="pill ok">Delivered</span>
+                  </div>
+                  <div class="mock-row">
+                    <div class="bar-lines"><span class="bar w-55"></span><span class="bar short w-35"></span></div>
+                    <span class="pill wait">Shipped</span>
+                  </div>
+                  <div class="mock-row">
+                    <div class="bar-lines"><span class="bar w-85"></span><span class="bar short w-60"></span></div>
+                    <span class="pill due">Expires soon</span>
+                  </div>
+                  <div class="mock-row">
+                    <div class="bar-lines"><span class="bar w-45"></span><span class="bar short w-35"></span></div>
+                    <span class="pill flat">Applied</span>
+                  </div>
+                </div>
+              </div>
+              <figcaption class="meta" style="padding:12px 16px 14px">
+                An illustration of the sample list, drawn in CSS. Not a screenshot.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section">
+      <div class="wrap">
+        <div class="split">
+          <div>
+            <div class="kicker">The problem</div>
+            <h2>Sample and collab status is scattered</h2>
+            <p>
+              An affiliate creator's work is spread across several different places in the
+              TikTok Shop app: the sample you applied for, the shipment that may or may not
+              have arrived, the collaboration invitation sitting in a message thread, and the
+              orders that were actually attributed to your videos.
+            </p>
+            <p>
+              It is easy to lose track of what shipped, what arrived, and what still needs a
+              reply before it expires. Nothing is broken — the information is simply not in
+              one list you can read top to bottom.
+            </p>
+            <p>
+              Affiliate Dashboard reads that information through the official TikTok Shop API
+              and lays it out in a single local view.
+            </p>
+          </div>
+          <div class="split-media">
+            <figure class="app-frame">
+              <div class="chrome" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span class="addr">localhost</span>
+              </div>
+              <div class="app-body">
+                <div class="app-tabs" aria-hidden="true">
+                  <span class="app-tab">Samples</span>
+                  <span class="app-tab">Collabs</span>
+                  <span class="app-tab">Showcase</span>
+                  <span class="app-tab on">Earnings</span>
+                </div>
+                <div class="mock-tiles" aria-hidden="true">
+                  <div class="mock-tile"><span class="bar w-70"></span><span class="bar short w-45"></span></div>
+                  <div class="mock-tile"><span class="bar w-55"></span><span class="bar short w-60"></span></div>
+                  <div class="mock-tile"><span class="bar w-60"></span><span class="bar short w-35"></span></div>
+                </div>
+                <div class="mock-chart" aria-hidden="true">
+                  <span style="height:38%"></span><span style="height:62%"></span>
+                  <span style="height:48%"></span><span style="height:80%"></span>
+                  <span style="height:55%"></span><span style="height:92%"></span>
+                  <span style="height:70%"></span>
+                </div>
+              </div>
+              <figcaption class="meta" style="padding:12px 16px 14px">
+                An illustration of the earnings view, drawn in CSS. Not a screenshot.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUR VIEWS -->
+    <section class="section tint">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">The four views</span>
+          <h2>One list for each part of the job</h2>
+          <p>Every view is assembled from data the creator's own account already has access to.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="ico" aria-hidden="true">📦</div>
+            <h3>Samples</h3>
+            <p>
+              Every sample application in one list, with its current fulfillment status —
+              applied, approved, shipped, delivered — so nothing sits in limbo unnoticed.
+            </p>
+          </div>
+          <div class="feature">
+            <div class="ico" aria-hidden="true">🤝</div>
+            <h3>Collab invites</h3>
+            <p>
+              Target collaboration invitations gathered together, so an invitation that needs
+              a reply before it expires is visible rather than buried.
+            </p>
+          </div>
+          <div class="feature">
+            <div class="ico" aria-hidden="true">🛍️</div>
+            <h3>Showcase</h3>
+            <p>
+              The products currently on the creator's showcase, listed alongside the samples
+              and collaborations they came from.
+            </p>
+          </div>
+          <div class="feature">
+            <div class="ico" aria-hidden="true">📈</div>
+            <h3>Earnings</h3>
+            <p>
+              Orders attributed to the creator's content, so commission can be traced back to
+              the sample or collaboration that produced it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- READ-ONLY CALLOUT -->
+    <section class="section">
+      <div class="prose">
+        <div class="callout">
+          <h2>Read-only by design</h2>
+          <p>
+            Affiliate Dashboard performs no writes, sends no messages, and takes no action on
+            the platform. It requests read scopes only, and the HTTP client refuses any request
+            that is not on an explicit allowlist of read endpoints.
+          </p>
+          <p>
+            Accepting a collaboration, replying to a message, or applying for a sample is still
+            done by the creator, in the TikTok Shop app. This tool only shows what is there.
+          </p>
+        </div>
+        <p class="center">
+          <a class="btn btn-ghost" href="how-it-works.html">See the integration in detail →</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- STATUS -->
+    <section class="section tint">
+      <div class="prose">
+        <div class="kicker" style="text-align:center">Project status</div>
+        <h2 class="center">Where this is today</h2>
+        <p>
+          Affiliate Dashboard is currently in development. It runs locally on the developer's own
+          machine and is being validated against the developer's own creator account first, so
+          that the read-only behaviour and the data mapping can be checked against a real account
+          before anyone else connects one.
+        </p>
+        <p>
+          The intent is for this to become a tool other affiliate creators can use. It is an
+          independent project, and is not affiliated with, endorsed by, or sponsored by TikTok.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a class="brand" href="index.html"><span class="mark" aria-hidden="true">AD</span><span>Affiliate Dashboard</span></a>
+          <p>A read-only, locally run dashboard that brings a TikTok Shop affiliate creator's samples, collaborations, showcase and attributed orders into one view.</p>
+        </div>
+        <nav class="foot-col" aria-label="Product">
+          <h3>Product</h3>
+          <a href="index.html">Home</a>
+          <a href="how-it-works.html">How it works</a>
+        </nav>
+        <nav class="foot-col" aria-label="Information">
+          <h3>Info</h3>
+          <a href="contact.html">Contact</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </nav>
+      </div>
+      <div class="foot-bottom">
+        <span>&copy; 2026 Affiliate Dashboard</span>
+        <span><a href="mailto:islaxtech@gmail.com">islaxtech@gmail.com</a></span>
+      </div>
+      <p class="disclaimer">
+        Independent project. Not affiliated with, endorsed by, or sponsored by TikTok.
+        TikTok and TikTok Shop are trademarks of their respective owners.
+      </p>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
